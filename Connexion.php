@@ -40,7 +40,15 @@
     </header>
     <main>
     <?php
-$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$port = 25060;
+$username = 'doadmin';
+$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+$database = 'defaultdb';
+$sslmode = 'REQUIRED';
+
+// Connexion à la base de données
+$mysqli = mysqli_connect($host, $username, $password, $database, $port);
 
 $mysqli->close();
 
@@ -106,7 +114,15 @@ if(!isset($_SESSION['login'])){
 
     //action de validation du formulaire d'inscripon
     if(isset($_GET['type']) && ($_GET['type'] == "resultatFormulaire")){
-    $mysqli = mysqli_connect('127.0.0.1', 'root', '');
+    	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$port = 25060;
+$username = 'doadmin';
+$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+$database = 'defaultdb';
+$sslmode = 'REQUIRED';
+
+// Connexion à la base de données
+$mysqli = mysqli_connect($host, $username, $password, $database, $port);
     $ok = $mysqli->select_db("LBMA");
     $login = $_POST['login'];
     $result = $mysqli->query("SELECT * FROM CLIENT WHERE id_client ='".$mysqli->escape_string($login)."'");
@@ -161,7 +177,15 @@ if(!isset($_SESSION['login'])){
 
     //action de validation du formulaire de connexion
     if(isset($_GET['type']) && ($_GET['type'] == "resultatConnexion")){
-    $mysqli = mysqli_connect('127.0.0.1', 'root', '');
+    	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$port = 25060;
+$username = 'doadmin';
+$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+$database = 'defaultdb';
+$sslmode = 'REQUIRED';
+
+// Connexion à la base de données
+$mysqli = mysqli_connect($host, $username, $password, $database, $port);
     $ok = $mysqli->select_db("LBMA");
 
     $login = $_POST['login'];
@@ -196,7 +220,15 @@ if(!isset($_SESSION['login'])){
 }else{
      //Si deconnexion
      if(isset($_GET['type']) && ($_GET['type'] == "deconnexion")){
-        $mysqli = mysqli_connect('127.0.0.1', 'root', '');
+        	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$port = 25060;
+$username = 'doadmin';
+$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+$database = 'defaultdb';
+$sslmode = 'REQUIRED';
+
+// Connexion à la base de données
+$mysqli = mysqli_connect($host, $username, $password, $database, $port);
         $ok = $mysqli->select_db("LBMA");
     
         session_destroy();
