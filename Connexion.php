@@ -49,6 +49,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
 
 $mysqli->close();
 
@@ -123,6 +127,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
     $ok = $mysqli->select_db("LBMA");
     $login = $_POST['login'];
     $result = $mysqli->query("SELECT * FROM CLIENT WHERE id_client ='".$mysqli->escape_string($login)."'");
@@ -186,6 +194,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
     $ok = $mysqli->select_db("LBMA");
 
     $login = $_POST['login'];
@@ -229,6 +241,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
         $ok = $mysqli->select_db("LBMA");
     
         session_destroy();

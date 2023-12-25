@@ -60,6 +60,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
 
 $ok = $mysqli->select_db("LBMA");
 	$condition = true;
@@ -109,6 +113,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
 $ok = $mysqli->select_db("LBMA");
 
 
@@ -165,6 +173,10 @@ $sslmode = 'REQUIRED';
 
 // Connexion à la base de données
 $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
 	 $ok = $mysqli->select_db("LBMA");
 
 
