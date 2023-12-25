@@ -27,8 +27,15 @@ include 'Donnees.inc.php';
 	return($resultat);
   }
 
-  
-$mysqli=mysqli_connect('127.0.0.1', 'root', '') or die("Erreur de connexion");
+$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$port = 25060;
+$username = 'doadmin';
+$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+$database = 'defaultdb';
+$sslmode = 'REQUIRED';
+
+// Connexion à la base de données
+$mysqli = mysqli_connect($host, $username, $password, $database, $port)or die("Erreur de connexion");
 $base="Recette";
 /*
 $Sql="
