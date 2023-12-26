@@ -102,8 +102,10 @@ while($row = $result-> fetch_row()){
 
 
 //Creation de la table HIERARCHIE et remplissage de celle ci
-$mysqli->query("CREATE TABLE HIERARCHIE (id_hierarchie VARCHAR(20) PRIMARY KEY,nom_hierarchie VARCHAR(255),cat_inf VARCHAR(255) NULL, FOREIGN KEY(id_hierarchie) REFERENCES INGREDIENT(id_ingredient))");
-$mysqli->query("CREATE TABLE HIERARCHIE_ASC (id_hierarchie VARCHAR(20) PRIMARY KEY,nom_hierarchie VARCHAR(255), cat_sup VARCHAR(255) NULL, FOREIGN KEY(id_hierarchie) REFERENCES INGREDIENT(id_ingredient))");
+$mysqli->query("CREATE TABLE HIERARCHIE (id_hierarchie VARCHAR(20),nom_hierarchie VARCHAR(255),cat_inf VARCHAR(255) NULL, FOREIGN KEY(id_hierarchie) REFERENCES INGREDIENT(id_ingredient),UNIQUE (id_hierarchie,cat_inf))");
+
+$mysqli->query("CREATE TABLE HIERARCHIE_ASC (id_hierarchie VARCHAR(20),nom_hierarchie VARCHAR(255), cat_sup VARCHAR(255) NULL, FOREIGN KEY(id_hierarchie) REFERENCES INGREDIENT(id_ingredient), UNIQUE (id_hierarchie,cat_sup))");
+
 
 //$mysqli->query("INSERT INTO HIERARCHIE(id_hierarchie,nom_hierarchie,cat_sup,cat_inf ) SELECT id_ingredient,nom_ingredient,NULL,NULL FROM INGREDIENT");
 //Remplissage des sous catégorie et sup catégorie
