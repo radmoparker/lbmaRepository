@@ -102,13 +102,13 @@ while($row = $result-> fetch_row()){
 
 
 //Creation de la table HIERARCHIE et remplissage de celle ci
-CREATE TABLE HIERARCHIE (
+$mysqli->query("CREATE TABLE HIERARCHIE (
     id_hierarchie VARCHAR(20),
     nom_hierarchie VARCHAR(255),
     cat_inf VARCHAR(255) NULL,
     FOREIGN KEY (id_hierarchie) REFERENCES INGREDIENT (id_ingredient),
     UNIQUE (id_hierarchie, cat_inf)
-);
+)");
 $mysqli->query("CREATE TABLE HIERARCHIE_ASC (id_hierarchie VARCHAR(20),nom_hierarchie VARCHAR(255), cat_sup VARCHAR(255) NULL, FOREIGN KEY(id_hierarchie) REFERENCES INGREDIENT(id_ingredient), UNIQUE (id_hierarchie,cat_sup))");
 
 
