@@ -8,7 +8,7 @@
 		//changement de la couleur du fond du dernier paragraphe
 		//Au clique du bouton "Cliquez"
 		function accueil(){
-			document.location.href ="index.html?";
+			document.location.href ="index.php?";
 			
 			//document.fgColor = "red";
 		}
