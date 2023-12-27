@@ -7,7 +7,7 @@
 
 		//changement de la couleur du fond du dernier paragraphe
 		function accueil(){
-			document.location.href ="lbmaWebsite.php?";
+			document.location.href ="index.php?";
 			
 			document.fgColor = "red";
 		}
@@ -195,7 +195,7 @@ if ($mysqli->connect_error) {
    
 		//AFFICHAGE DES LIENS (SPAN)
 		while($row = $result-> fetch_row()){
-		   echo "<a href=\"lbmaWebsite.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+		   echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
 			 //echo $row[0];echo " ";echo $row[1];
 		   
 		   echo "<br>";
@@ -242,7 +242,7 @@ if ($mysqli->connect_error) {
 			WHERE i.id_ingredient = h.id_hierarchie
 			AND h.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'");
 			while($row = $result-> fetch_row()){
-				echo "<a href=\"lbmaWebsite.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+				echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
 				//echo $row[0];echo " ";echo $row[1];
 				
 				echo "<br>";
@@ -250,7 +250,7 @@ if ($mysqli->connect_error) {
 		}else{
 			//AFFICHAGE DES LIENS (SPAN)
 		while($row = $result-> fetch_row()){
-			echo "<a href=\"lbmaWebsite.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+			echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
 			  //echo $row[0];echo " ";echo $row[1];
 			
 			echo "<br>";
