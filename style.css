@@ -1,3 +1,6 @@
+body {
+    margin: 0; /* Supprimer la marge par défaut du corps de la page */
+}
 
 header {
     background-color: #333;
@@ -15,14 +18,20 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    margin-top: 20%;
-    float: left;
 }
 
 main {
     /* Ajuster la marge à gauche en fonction de la largeur du menu de navigation */
-    margin-left: 400px;
+    margin-left: 200px; /* Ajuster la marge à gauche en fonction de la largeur du menu de navigation */
     padding: 10px;
-    float: left;
 }
 
+/* Ajouter du style pour éviter que le contenu de main ne soit caché par le menu de navigation */
+main {
+    box-sizing: border-box;
+}
+
+/* Ajouter du style pour éviter que le contenu de main ne soit caché par le menu de navigation */
+main {
+    box-sizing: border-box;
+}
