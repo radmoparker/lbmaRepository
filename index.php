@@ -42,6 +42,144 @@
 
 	
     </header>
+<nav>
+    <p>Ceci est le nav</p>
+   <?php
+         
+    
+	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+	$port = 25060;
+	$username = 'doadmin';
+	$password = 'AVNS_0_3_USnXxaDGye-lb-w';
+	$database = 'defaultdb';
+	$sslmode = 'REQUIRED';
+
+	// Connexion à la base de données
+	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+// Vérifier la connexion
+if ($mysqli->connect_error) {
+    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
+}
+	 $ok = $mysqli->select_db("LBMA");
+
+
+
+
+
+
+
+	if(!isset($_GET['hierarchie'])){
+		//Affichage des ingrédient qui n'ont pas de categorie superieur
+		$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie,i.nom_ingredient
+		FROM HIERARCHIE h, INGREDIENT i
+		WHERE i.id_ingredient = h.id_hierarchie
+		AND id_hierarchie NOT IN 
+		(SELECT hi.cat_inf FROM HIERARCHIE hi) ");
+   
+		//AFFICHAGE DES LIENS (SPAN)
+		while($row = $result-> fetch_row()){
+		   echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+			 //echo $row[0];echo " ";echo $row[1];
+		   
+		   echo "<br>";
+		 }
+	}else{
+		//ON A CLIQUÉ POUR ATTEINDRE LES ÉLÉMENTS SUIVANTS
+		echo "<p>ON EST BIEN DANS LE ELSE</p>";
+		$hierarchie = $_GET['hierarchie'];
+		//".$mysqli->escape_string($hierarchie)."
+		/*$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
+    FROM HIERARCHIE h, INGREDIENT i
+    WHERE i.id_ingredient = h.id_hierarchie
+    AND NOT EXISTS (
+        SELECT hi.cat_inf
+        FROM HIERARCHIE hi
+        WHERE hi.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'
+        AND hi.cat_inf = h.id_hierarchie
+    )");
+	*/
+
+
+	$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
+    FROM HIERARCHIE h, INGREDIENT i
+    WHERE i.id_ingredient = h.id_hierarchie
+    AND h.id_hierarchie = (
+        SELECT hi.cat_inf
+        FROM HIERARCHIE hi
+        WHERE hi.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'
+        AND hi.cat_inf = h.id_hierarchie
+    )");
+
+		/*
+		!= ".$mysqli->escape_string($hierarchie)."
+		AND id_hierarchie NOT IN 
+		(SELECT hi.cat_inf FROM HIERARCHIE hi) ");
+		*/
+
+		//Test si le résultat est null on affiche le même élément
+		if($result->num_rows ==0) {
+			echo "<p>ON ne peut aller plus bas</p>";
+
+			$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
+			FROM HIERARCHIE h, INGREDIENT i
+			WHERE i.id_ingredient = h.id_hierarchie
+			AND h.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'");
+			while($row = $result-> fetch_row()){
+				echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+				//echo $row[0];echo " ";echo $row[1];
+				
+				echo "<br>";
+			}
+		}else{
+			//AFFICHAGE DES LIENS (SPAN)
+		while($row = $result-> fetch_row()){
+			echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
+			  //echo $row[0];echo " ";echo $row[1];
+			
+			echo "<br>";
+		  }
+		}
+   
+		
+	}
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 $mysqli->close();
+   
+ 
+ 
+ 	?>
+	
+	
+
+    </nav>
+	
     <main>
     <p>Ceci est le main</p>
 
@@ -198,139 +336,8 @@ $mysqli->close();
 ?>
 
     </main>
-    <nav>
-    <p>Ceci est le nav</p>
-   <?php
-         
     
-	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
-	$port = 25060;
-	$username = 'doadmin';
-	$password = 'AVNS_0_3_USnXxaDGye-lb-w';
-	$database = 'defaultdb';
-	$sslmode = 'REQUIRED';
 
-	// Connexion à la base de données
-	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
-// Vérifier la connexion
-if ($mysqli->connect_error) {
-    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
-}
-	 $ok = $mysqli->select_db("LBMA");
-
-
-
-
-
-
-
-	if(!isset($_GET['hierarchie'])){
-		//Affichage des ingrédient qui n'ont pas de categorie superieur
-		$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie,i.nom_ingredient
-		FROM HIERARCHIE h, INGREDIENT i
-		WHERE i.id_ingredient = h.id_hierarchie
-		AND id_hierarchie NOT IN 
-		(SELECT hi.cat_inf FROM HIERARCHIE hi) ");
-   
-		//AFFICHAGE DES LIENS (SPAN)
-		while($row = $result-> fetch_row()){
-		   echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
-			 //echo $row[0];echo " ";echo $row[1];
-		   
-		   echo "<br>";
-		 }
-	}else{
-		//ON A CLIQUÉ POUR ATTEINDRE LES ÉLÉMENTS SUIVANTS
-		echo "<p>ON EST BIEN DANS LE ELSE</p>";
-		$hierarchie = $_GET['hierarchie'];
-		//".$mysqli->escape_string($hierarchie)."
-		/*$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
-    FROM HIERARCHIE h, INGREDIENT i
-    WHERE i.id_ingredient = h.id_hierarchie
-    AND NOT EXISTS (
-        SELECT hi.cat_inf
-        FROM HIERARCHIE hi
-        WHERE hi.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'
-        AND hi.cat_inf = h.id_hierarchie
-    )");
-	*/
-
-
-	$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
-    FROM HIERARCHIE h, INGREDIENT i
-    WHERE i.id_ingredient = h.id_hierarchie
-    AND h.id_hierarchie = (
-        SELECT hi.cat_inf
-        FROM HIERARCHIE hi
-        WHERE hi.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'
-        AND hi.cat_inf = h.id_hierarchie
-    )");
-
-		/*
-		!= ".$mysqli->escape_string($hierarchie)."
-		AND id_hierarchie NOT IN 
-		(SELECT hi.cat_inf FROM HIERARCHIE hi) ");
-		*/
-
-		//Test si le résultat est null on affiche le même élément
-		if($result->num_rows ==0) {
-			echo "<p>ON ne peut aller plus bas</p>";
-
-			$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
-			FROM HIERARCHIE h, INGREDIENT i
-			WHERE i.id_ingredient = h.id_hierarchie
-			AND h.id_hierarchie = '".$mysqli->escape_string($hierarchie)."'");
-			while($row = $result-> fetch_row()){
-				echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
-				//echo $row[0];echo " ";echo $row[1];
-				
-				echo "<br>";
-			}
-		}else{
-			//AFFICHAGE DES LIENS (SPAN)
-		while($row = $result-> fetch_row()){
-			echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
-			  //echo $row[0];echo " ";echo $row[1];
-			
-			echo "<br>";
-		  }
-		}
-   
-		
-	}
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	 $mysqli->close();
-   
- 
- 
- 	?>
 	<?php	//ANCIENNE FONCTION
 
 
@@ -390,9 +397,6 @@ $ok = $mysqli->select_db("LBMA");
 
 
 	?>
-	
-
-    </nav>
 
 
 </body>
