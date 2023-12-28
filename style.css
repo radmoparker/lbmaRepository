@@ -1,0 +1,25 @@
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+nav {
+    background-color: #f2f2f2;
+    width: 200px;
+    height: 100vh;
+    /* Ajoutez la propriété position: fixed; pour fixer le menu à gauche */
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin-top: 20%;
+}
+
+main {
+    /* Ajustez la marge à gauche en fonction de la largeur du menu de navigation */
+    margin-left: 220px;
+    padding: 10px;
+}
