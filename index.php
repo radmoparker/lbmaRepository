@@ -74,7 +74,7 @@
 		
 		
     
-		$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+		/*$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 		$port = 25060;
 		$username = 'doadmin';
 		$password = 'AVNS_0_3_USnXxaDGye-lb-w';
@@ -91,6 +91,7 @@
 		}
 		
 		$ok = $mysqli->select_db("LBMA");
+		*/
 	
 		$hierarchie=$hier;
 		//$listRecette = array();
@@ -133,7 +134,7 @@
 			}
 		
 		}
-		$mysqli->close();
+		//$mysqli->close();
 		
 	}
 	
