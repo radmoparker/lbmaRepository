@@ -1,33 +1,41 @@
 <html>
 <head>
-	<title>Listes d�roulantes adaptatives</title>
+	<title>LBMA </title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<script language="Javascript">
 	
 
-		//changement de la couleur du fond du dernier paragraphe
+		//Charge index.php : accueil
 		function accueil(){
 			document.location.href ="index.php?";
 			
-			document.fgColor = "red";
+
 		}
-		function panier(){
-			document.location.href ="panier.php?";
+		//Charge rechercher.php : l'interface de recherche de recette
+		function rechercher(){
+			document.location.href ="rechercher.php?";
 			
-			document.fgColor = "red";
+
 		}
+		//Charge panier.php : l'intrface du panier
+		function panier(){
+			document.location.href ="panier.php?";	
+
+		}
+		//Charge Connexion.php : l'intrface de connexion au compte client
 		function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
-			document.fgColor = "red";
+
 		}
+		//Charge Connexion.php : l'intrface d'inscription client
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
-			document.fgColor = "red";
+
 		}
 		function goNext(id){
-			document.fgColor = "red";
+
 
 			//document.location.href='page1.htm'
 		}
@@ -55,12 +63,13 @@
     <button class="buttonMenu" onclick="connexion()">Connexion</button>
 	<button class="buttonMenu" onclick="inscription()">Inscription</button>
     <button class="buttonMenu" onclick="panier()">Panier</button>
+    <button class="buttonMenu" onclick="rechercher()">Rechercher</button>
 
 	
     </header>
     <main>
 		
-    <p style="color:green; font-weight:bold; font-size:20px;">Naviguez à travers nos ingrédients !</p>
+    <p style="color:green; font-weight:bold; font-size:20px;">Naviguez à travers nos ingrédients ! (à gauche)</p>
 	<?php
 	$chemin="";
 
@@ -72,9 +81,9 @@
 
 	function getAllRecipies($hier,$mysqli,&$listRecette){
 		
-		
+		/*
     
-		/*$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+		$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 		$port = 25060;
 		$username = 'doadmin';
 		$password = 'AVNS_0_3_USnXxaDGye-lb-w';
@@ -83,8 +92,8 @@
 
 		// Connexion à la base de données
 		$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-		
-		//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+		*/
+		/*$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 		// Vérifier la connexion
 		if ($mysqli->connect_error) {
 			die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -144,7 +153,7 @@
 <!--MAIN DU SITE : LA PARTIE CENTRALE-->
 
 <?php
-    
+    /*
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -155,8 +164,8 @@
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -186,13 +195,13 @@ if(isset($_GET['hierarchie'])){
 	}else{
 		$chemin = $_GET['arbre_ingredient'].$ingredient."/";
 	}
-	echo "<p style=\"color:blue;font-weight:bold;\">".$chemin."</p>";
+	echo "<p style=\"color:blue;font-weight:bold;font-size:20px;\">".$chemin."</p>";
 
 	//RÉCUPÉRATION POUR AVOIR LES RECETTES CORRESPONDANT À LA HIERARCHIE
 	$hierarchie = $_GET['hierarchie'];
 	
 	
-	echo" <p>ON DEVRAIT VOIR ".$hierarchie."</p>";
+	//echo" <p>ON DEVRAIT VOIR ".$hierarchie."</p>";
 
   //Affichage de toutes les recettes
   
@@ -200,7 +209,7 @@ if(isset($_GET['hierarchie'])){
 	getAllRecipies($hierarchie,$mysqli,$bb);
 	
 	foreach ($bb as $rec){
-		$u=0;
+		/*$u=0;
 		foreach ($rec as $elem){
 			echo "<p>".$u." ".$elem."</p>";
 			echo " ";
@@ -208,8 +217,12 @@ if(isset($_GET['hierarchie'])){
 			$u++;
 			
 		}
-		if (file_exists("Photos/".$rec[1].".jpg")) {
-			echo "<img src=\"Photos/".$rec[1].".jpg\" width=\"150\" height=\"150\">";
+		*/
+		echo "<p style=\"font-weight:bold;font-size:20px;\">".$rec[1]."</p>";
+		echo "<p>".$rec[2]."</p>";
+		$image = preg_replace('/\s+/', '_', $rec[1]);	//remplace " " par _ 
+		if (file_exists("Photos/".$image.".jpg")) {
+			echo "<img src=\"Photos/".$image.".jpg\" width=\"150\" height=\"150\">";
 		} else {
 			echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
 		}
@@ -236,9 +249,9 @@ $mysqli->close();
     </main>
 	<!--NAVIGATION À GAUCHE DU SITE-->
     <nav>
-    <p style="color:green; font-weight:bold; font-size:20px;">NAVIGATION</p>
+    <p style="color:black; font-weight:bold; font-size:20px;">NAVIGATION</p>
    <?php
-         
+         /*
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -249,8 +262,8 @@ $mysqli->close();
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 		die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -346,7 +359,7 @@ $mysqli->close();
 
 //FONCTION RECURSIVE POUR OBTENIR TOUS LES ID INGREDIENTS SOUS JACENTS
 function tableFromID($id){
-    
+    /*
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -357,8 +370,8 @@ function tableFromID($id){
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);

@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Listes d�roulantes adaptatives</title>
+	<title>Panier LBMA</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<script language="Javascript">
 	
@@ -9,22 +9,28 @@
 		function accueil(){
 			document.location.href ="index.php?";
 			
-			document.fgColor = "red";
+
 		}
 		function panier(){
 			document.location.href ="panier.php?";
 			
-			document.fgColor = "red";
+
 		}
 		function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
-			document.fgColor = "red";
+
+		}
+		//Charge rechercher.php : l'interface de recherche de recette
+		function rechercher(){
+			document.location.href ="rechercher.php?";
+			
+
 		}
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
-			document.fgColor = "red";
+
 		}
         //Supprime les cookies hors connexions
         function supprimerPanierHorsCo(id,recette){
@@ -33,7 +39,7 @@
     		expiration.setDate(expiration.getDate() -1);
 			//Cookie
 			document.cookie = "tab["+id+"]=; expires=" + expiration.toUTCString()+ ";";
-
+            alert('Suppression du panier de  : ' + recette);
 			document.location.href='panier.php';
 		}
         //Supprime les cookies correspondant aux éléments supprimer de la liste du client
@@ -66,6 +72,7 @@
     <button class="buttonMenu" onclick="connexion()">Connexion</button>
 	<button class="buttonMenu" onclick="inscription()">Inscription</button>
     <button class="buttonMenu" onclick="panier()">Panier</button>
+    <button class="buttonMenu" onclick="rechercher()">Rechercher</button>
 
 	
     </header>
@@ -116,13 +123,14 @@ if(!isset($_SESSION['login'])){
     
             echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$valeur."</span>";
             echo "<br>";
-            if (file_exists("Photos/".$valeur.".jpg")) {
-                echo "<img src=\"Photos/".$valeur.".jpg\" width=\"150\" height=\"150\">";
+            $image = preg_replace('/\s+/', '_', $valeur);	//remplace " " par _ 
+           if (file_exists("Photos/".$image.".jpg")) {
+                echo "<img src=\"Photos/".$image.".jpg\" width=\"150\" height=\"150\">";
             } else {
                 echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
             }
             echo "<br>";
-            echo "<button class=\"buttonDelete\" onclick=\"supprimerPanierHorsCo('".$indice."','".$valeur."')\">Supprimer </button>";
+            echo "<button class=\"buttonDelete\" onclick=\"supprimerPanierHorsCo('".$indice."','".$valeur."')\">Supprimer du Panier </button>";
     
             echo "<br>";
             echo "<br>"; 
@@ -130,7 +138,7 @@ if(!isset($_SESSION['login'])){
         }
     }
 }else{  //LE CLIENT EST CONNECTÉ 
-    
+    /*
         
             $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
             $port = 25060;
@@ -141,8 +149,8 @@ if(!isset($_SESSION['login'])){
 
             // Connexion à la base de données
             $mysqli = mysqli_connect($host, $username, $password, $database, $port);
-            
-            //$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+            */
+            $mysqli = mysqli_connect('127.0.0.1', 'root', '');
             $ok = $mysqli->select_db("LBMA");
     $login = $_SESSION['login'];
     //SUPPRESSION DANS SA BASE DE DONNÉE DES ÉLÉMENTS SUPPRIMÉES
@@ -213,13 +221,14 @@ if(!isset($_SESSION['login'])){
            echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$mysqli->escape_string($row[1])."</span>";
            $valeur=$mysqli->escape_string($row[1]);
            echo "<br>";
-           if (file_exists("Photos/".$valeur.".jpg")) {
-                echo "<img src=\"Photos/".$valeur.".jpg\" width=\"150\" height=\"150\">";
+           $image = preg_replace('/\s+/', '_', $valeur);	//remplace " " par _ 
+           if (file_exists("Photos/".$image.".jpg")) {
+                echo "<img src=\"Photos/".$image.".jpg\" width=\"150\" height=\"150\">";
             } else {
                 echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
             }
             echo "<br>";
-            echo "<button class=\"buttonDelete\" onclick=\"supprimerPanier('".$mysqli->escape_string($row[2])."','".$mysqli->escape_string($row[1])."')\">Supprimer </button>";
+            echo "<button class=\"buttonDelete\" onclick=\"supprimerPanier('".$mysqli->escape_string($row[2])."','".$mysqli->escape_string($row[1])."')\">Supprimer du Panier</button>";
   
            echo "<br>";
            echo "<p>---------------------------------------------------------------------</p>";
@@ -256,7 +265,8 @@ if(!isset($_SESSION['login'])){
 
     </main>
     <nav>
-    <!--<p>Ici connexion</p>-->
+    <h3>Panier</h3>
+    <p>L'abus d'alcool est dangeureux pour la santé,</p><p>Buvez avec modération,</p><p>LBMA </p>
    
 
 

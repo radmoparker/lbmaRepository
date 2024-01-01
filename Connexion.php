@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Listes d�roulantes adaptatives</title>
+	<title>Connexion LBMA</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<script language="Javascript">
 	
@@ -10,22 +10,27 @@
 		function accueil(){
 			document.location.href ="index.php?";
 			
-			//document.fgColor = "red";
+
 		}
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
-			//document.fgColor = "red";
+
 		}
         function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
-			document.fgColor = "red";
+
 		}
 		function panier(){
 			document.location.href ="panier.php?";
 			
-			document.fgColor = "red";
+
+		}
+		 //Charge rechercher.php : l'interface de recherche de recette
+		function rechercher(){
+			document.location.href ="rechercher.php?";
+			
 		}
 	</script>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -41,12 +46,14 @@
     <button class="buttonMenu" onclick="connexion()">Connexion</button>
 	<button class="buttonMenu" onclick="inscription()">Inscription</button>
     <button class="buttonMenu" onclick="panier()">Panier</button>
+    <button class="buttonMenu" onclick="rechercher()">Rechercher</button>
+
 
 	
     </header>
     <main>
     <?php
-	    
+	    /*
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -57,8 +64,8 @@
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -131,7 +138,7 @@ if(!isset($_SESSION['login'])){
 
     //action de validation du formulaire d'inscripon
     if(isset($_GET['type']) && ($_GET['type'] == "resultatFormulaire")){
-    	 
+    	 /*
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -142,8 +149,8 @@ if(!isset($_SESSION['login'])){
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -214,7 +221,7 @@ if ($mysqli->connect_error) {
 
     //action de validation du formulaire de connexion
     if(isset($_GET['type']) && ($_GET['type'] == "resultatConnexion")){
-    	
+    	/*
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -225,8 +232,8 @@ if ($mysqli->connect_error) {
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 	    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -271,7 +278,7 @@ if ($mysqli->connect_error) {
 }else{
      //Si deconnexion
      if(isset($_GET['type']) && ($_GET['type'] == "deconnexion")){
-    	
+    	/*
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -282,8 +289,8 @@ if ($mysqli->connect_error) {
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
-	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	*/
+	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 	    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -335,7 +342,36 @@ if ($mysqli->connect_error) {
 
     </main>
     <nav>
-    <p>Ici connexion</p>
+    <?php
+    //Affichage d'information dans le menu navigation de connexion
+    if(isset($_GET['type']) && ($_GET['type'] == "connexion" || $_GET['type'] == "resultatConnexion")){
+    	echo "<h3>Connexion</h3>";
+    //Si on n'est pas connecté
+	if(!isset($_SESSION['login'])){
+		echo "<p>Connectez vous pour accéder à tous vos coktails !!</p>";
+	}else{
+		$login = $_SESSION['login'];
+		echo "<p>Vous êtes connecté ".$login." !</p>";
+	}
+    }
+    //Affichage de déconnexion
+    if(isset($_GET['type']) && ( $_GET['type'] == "deconnexion")){
+    echo "<h3>Connexion</h3>";
+    	echo "<p>Connectez vous pour accéder à tous vos coktails !!</p>";
+    }
+    //Affichage d'information dans le menu navigation d'inscription
+    if(isset($_GET['type']) && ($_GET['type'] == "inscription" || $_GET['type'] == "resultatFormulaire")){
+    echo "<h3>Inscription</h3>";
+    //Si on n'est pas connecté
+	if(!isset($_SESSION['login'])){
+		echo "<p>Inscrivez vous afin de découvrir tous nos coktails !!</p>";
+	}else{
+		$login = $_SESSION['login'];
+		echo "<p>Vous êtes inscrit ".$login." !</p>";
+	}
+    }
+    	
+    ?>
    
 
 
