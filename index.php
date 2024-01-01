@@ -153,7 +153,7 @@
 <!--MAIN DU SITE : LA PARTIE CENTRALE-->
 
 <?php
-    /*
+    
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -164,8 +164,8 @@
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -251,7 +251,7 @@ $mysqli->close();
     <nav>
     <p style="color:black; font-weight:bold; font-size:20px;">NAVIGATION</p>
    <?php
-         /*
+         
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -262,8 +262,8 @@ $mysqli->close();
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 		die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -359,7 +359,7 @@ $mysqli->close();
 
 //FONCTION RECURSIVE POUR OBTENIR TOUS LES ID INGREDIENTS SOUS JACENTS
 function tableFromID($id){
-    /*
+    
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -370,8 +370,8 @@ function tableFromID($id){
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);

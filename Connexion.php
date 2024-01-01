@@ -53,7 +53,7 @@
     </header>
     <main>
     <?php
-	    /*
+	    
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -64,8 +64,8 @@
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -138,7 +138,7 @@ if(!isset($_SESSION['login'])){
 
     //action de validation du formulaire d'inscripon
     if(isset($_GET['type']) && ($_GET['type'] == "resultatFormulaire")){
-    	 /*
+    	 
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -149,8 +149,8 @@ if(!isset($_SESSION['login'])){
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 // Vérifier la connexion
 if ($mysqli->connect_error) {
     die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -221,7 +221,7 @@ if ($mysqli->connect_error) {
 
     //action de validation du formulaire de connexion
     if(isset($_GET['type']) && ($_GET['type'] == "resultatConnexion")){
-    	/*
+    	
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -232,8 +232,8 @@ if ($mysqli->connect_error) {
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 	    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
@@ -278,7 +278,7 @@ if ($mysqli->connect_error) {
 }else{
      //Si deconnexion
      if(isset($_GET['type']) && ($_GET['type'] == "deconnexion")){
-    	/*
+    	
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -289,8 +289,8 @@ if ($mysqli->connect_error) {
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 	    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);

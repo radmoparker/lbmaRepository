@@ -138,7 +138,7 @@ if(!isset($_SESSION['login'])){
         }
     }
 }else{  //LE CLIENT EST CONNECTÉ 
-    /*
+    
         
             $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
             $port = 25060;
@@ -149,8 +149,8 @@ if(!isset($_SESSION['login'])){
 
             // Connexion à la base de données
             $mysqli = mysqli_connect($host, $username, $password, $database, $port);
-            */
-            $mysqli = mysqli_connect('127.0.0.1', 'root', '');
+            
+            //$mysqli = mysqli_connect('127.0.0.1', 'root', '');
             $ok = $mysqli->select_db("LBMA");
     $login = $_SESSION['login'];
     //SUPPRESSION DANS SA BASE DE DONNÉE DES ÉLÉMENTS SUPPRIMÉES

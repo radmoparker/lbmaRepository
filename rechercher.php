@@ -1,6 +1,6 @@
 <?php
     //Récupération de l'ensemble des ingrédients à partir de la bases de données 
-    /*
+    
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -11,8 +11,8 @@
 
 	// Connexion à la base de données
 	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	*/
-	$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+	
+	//$mysqli = mysqli_connect('127.0.0.1', 'root', '');
 	// Vérifier la connexion
 	if ($mysqli->connect_error) {
 		die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
