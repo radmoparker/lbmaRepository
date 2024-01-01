@@ -284,6 +284,7 @@ $mysqli->query("CREATE TABLE CLIENT (
 )");
 //CREATION TABLE PANIER
 $mysqli->query("CREATE TABLE PANIER (
+id INT AUTO_INCREMENT PRIMARY KEY,
   id_client VARCHAR(200),
   id_recette VARCHAR(255),
   FOREIGN KEY(id_recette) REFERENCES RECETTE(id_recette),
