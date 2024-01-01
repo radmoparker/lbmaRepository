@@ -283,8 +283,8 @@ $mysqli->query("CREATE TABLE CLIENT (
   adresse VARCHAR(255) NULL
 )");
 //CREATION TABLE PANIER
+$mysqli->query("SET sql_require_primary_key=0");
 $mysqli->query("CREATE TABLE PANIER (
-id INT AUTO_INCREMENT PRIMARY KEY,
   id_client VARCHAR(200),
   id_recette VARCHAR(255),
   FOREIGN KEY(id_recette) REFERENCES RECETTE(id_recette),
