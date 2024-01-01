@@ -20,6 +20,7 @@ include 'Donnees.inc.php';
 
 
 <?php // Cr�ation de la base de donn�es 
+	$host ="local";
 
   function query($link,$requete)
   { 
@@ -283,7 +284,12 @@ $mysqli->query("CREATE TABLE CLIENT (
   adresse VARCHAR(255) NULL
 )");
 //CREATION TABLE PANIER
-$mysqli->query("SET sql_require_primary_key=0");
+//Obligatoire en mode server distant
+if($host == "local"){
+}else{
+	$mysqli->query("SET sql_require_primary_key=0");
+}
+
 $mysqli->query("CREATE TABLE PANIER (
   id_client VARCHAR(200),
   id_recette VARCHAR(255),
