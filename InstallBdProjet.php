@@ -216,15 +216,14 @@ foreach($Hierarchie as $indice => $ingredient){
 
 
 
-
-//CREATION DE LA TABLE RECETTE
+//affichage des recettes
 $mysqli->query("CREATE TABLE RECETTE (
 id_recette VARCHAR(20) PRIMARY KEY,
 titre_recette VARCHAR(255),
 preparation VARCHAR(1000) )");
 
-//CREATION DE LA TABLE COMPOSITION
 $mysqli->query("CREATE TABLE COMPOSITION (
+id_composition VARCHAR(20) PRIMARY KEY,
   id_recette VARCHAR(20) ,
   qtt_ingredient VARCHAR(255),
   id_ingredient VARCHAR(255) NULL,
@@ -232,14 +231,15 @@ $mysqli->query("CREATE TABLE COMPOSITION (
   FOREIGN KEY(id_recette) REFERENCES RECETTE(id_recette),
   FOREIGN KEY(id_ingredient) REFERENCES INGREDIENT(id_ingredient)
 )");
-
-//REMPLISSAGE DES TABLES RECETTE ET COMPOSITION
+$num_composition =1;
 foreach($Recettes as $indice => $tuples){
   //Affichage titres
   $mysqli->query("INSERT INTO RECETTE VALUES 
   ('".$mysqli->escape_string($indice)."','".$mysqli->escape_string($tuples['titre'])."','".$mysqli->escape_string($tuples['preparation'])."')");
 
-  
+  //echo $tuples['titre'];
+  //echo "<br>";
+  //echo "<br>";
   //Séparation des ingrédient par | 
   $tab_ingredient = explode("|",$tuples['ingredients']);
   //Affichage des ingrédient  l'ordre des clés index coincide avec ingredients
@@ -247,19 +247,28 @@ foreach($Recettes as $indice => $tuples){
   $ingredient_associe = $tuples['index'];
   foreach($tab_ingredient as $ingredient){
     $mysqli->query("INSERT INTO COMPOSITION VALUES 
-    ('".$mysqli->escape_string($indice)."','".$mysqli->escape_string($ingredient)."', 
+    ('".$mysqli->escape_string("comp".$num_composition)."','".$mysqli->escape_string($indice)."','".$mysqli->escape_string($ingredient)."', 
     (SELECT id_ingredient 
     FROM INGREDIENT 
     WHERE nom_ingredient = '".$mysqli->escape_string($ingredient_associe[$num_ingredient])."'),
     (SELECT nom_ingredient 
     FROM INGREDIENT 
     WHERE nom_ingredient = '".$mysqli->escape_string($ingredient_associe[$num_ingredient])."'))");
-    
-    $num_ingredient++;
+
+      //echo $ingredient;
+     // echo "<br>";
+      $num_ingredient++;
+      $num_composition++;
   }
   
   
+  //Affichage de lapréparation
+ // echo "<br>";
+ // echo $tuples['preparation'];
+ // echo "<br><br>";
+  //echo "<br>";echo "<br>";
 }
+
 
 
 //CREATION DE LA TABLE CLIENT
