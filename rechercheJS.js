@@ -31,7 +31,7 @@ function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
             var spanB = document.getElementById("spanSans");
         spanA.innerHTML="";
-        spanBinnerHTML="";
+        spanB.innerHTML="";
 }
 /*  !! ATTENTION : CETTE FONCTION EST ESSENTIELLE
     lorsqu'on charge les image directement dans la boucle for (en meme temps que le parcours des recettes)
