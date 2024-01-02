@@ -29,8 +29,8 @@ function ajouterSans(){
 }
 function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
+    spanA.innerHTML="";
     var spanB = document.getElementById("spanSans");
-        spanA.innerHTML="";
         spanB.innerHTML="";
 }
 /*  !! ATTENTION : CETTE FONCTION EST ESSENTIELLE
