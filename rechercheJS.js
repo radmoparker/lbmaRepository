@@ -29,7 +29,7 @@ function ajouterSans(){
 }
 function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
-            var spanB = document.getElementById("spanSans");
+    var spanB = document.getElementById("spanSans");
         spanA.innerHTML="";
         spanB.innerHTML="";
 }
