@@ -29,8 +29,8 @@ function ajouterSans(){
 }
 function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
-    spanA.innerHTML="";
     var spanB = document.getElementById("spanSans");
+        spanA.innerHTML="";
         spanB.innerHTML="";
 }
 /*  !! ATTENTION : CETTE FONCTION EST ESSENTIELLE
@@ -68,6 +68,13 @@ function createButton(newDiv, id, name) {
         ajouterPanier(id, name);    //Définie dans le fichier rechercher.php 
     });
     newDiv.append(button); // Ajoute le bouton à la div
+     //addClass pour pouvoir génerer le css
+     var button2 = $('<button>').addClass('buttonComposition').text('Composition');
+     button2.on('click', function() {
+        composition(id,name);    //Définie dans le fichier rechercher.php 
+     });
+     newDiv.append(button2);
+     newDiv.append("<br>");
 }
 
 
@@ -98,13 +105,27 @@ function bRecherche(){
             
                 for (let j = 1; j < recet.length; j++) {
                     var elem = recet[j];
+                    var p_elem;
                     if(j==1){   //UNIQUEMENT POUR LE TITRE
-                        var p_elem = $('<p>').text(elem).css({
+                        p_elem = $('<p>').text(elem).css({
                             'font-weight': 'bold',
                             'font-size': '20px'
                         });
                     }else{
-                        var p_elem = $('<p>').text(elem);
+                        var texxt="";
+
+                        if (j==3) {     //if compteur Pour la 
+                            texxt= 'SATISFACTION : ';
+                            p_elem = $('<p>').text(texxt+elem).css({
+		                    'font-weight': 'bold',
+		                    'font-size': '18px' ,
+		                    'color':'blue'
+		                });
+		        }else{
+		        p_elem = $('<p>').text(texxt+elem);
+		        }
+                        
+                        
                     }
                     newDiv.append(p_elem);
                         //newDiv.append("<br>");

@@ -278,7 +278,6 @@ if ($mysqli->connect_error) {
 }else{
      //Si deconnexion
      if(isset($_GET['type']) && ($_GET['type'] == "deconnexion")){
-    	
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;

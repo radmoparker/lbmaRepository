@@ -32,6 +32,9 @@
 
 
 		}
+        function composition(id,nom){
+			document.location.href ="composition.php?id="+id+"&nom="+nom;
+		}
         //Supprime les cookies hors connexions
         function supprimerPanierHorsCo(id,recette){
 			var expiration = new Date();
@@ -123,6 +126,7 @@ if(!isset($_SESSION['login'])){
     
             echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$valeur."</span>";
             echo "<br>";
+            echo "<br>";
             $image = preg_replace('/\s+/', '_', $valeur);	//remplace " " par _ 
            if (file_exists("Photos/".$image.".jpg")) {
                 echo "<img src=\"Photos/".$image.".jpg\" width=\"150\" height=\"150\">";
@@ -130,7 +134,11 @@ if(!isset($_SESSION['login'])){
                 echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
             }
             echo "<br>";
+            echo "<br>";
             echo "<button class=\"buttonDelete\" onclick=\"supprimerPanierHorsCo('".$indice."','".$valeur."')\">Supprimer du Panier </button>";
+            echo "<br>";
+            echo "<br>";
+            echo "<button class=\"buttonComposition\" onclick=\"composition('".$indice."','".$valeur."')\">Composition</button>";
     
             echo "<br>";
             echo "<br>"; 
@@ -138,7 +146,7 @@ if(!isset($_SESSION['login'])){
         }
     }
 }else{  //LE CLIENT EST CONNECTÉ 
-    
+    /*
         
             $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
             $port = 25060;
@@ -149,8 +157,8 @@ if(!isset($_SESSION['login'])){
 
             // Connexion à la base de données
             $mysqli = mysqli_connect($host, $username, $password, $database, $port);
-            
-            //$mysqli = mysqli_connect('127.0.0.1', 'root', '');
+            */
+            $mysqli = mysqli_connect('127.0.0.1', 'root', '');
             $ok = $mysqli->select_db("LBMA");
     $login = $_SESSION['login'];
     //SUPPRESSION DANS SA BASE DE DONNÉE DES ÉLÉMENTS SUPPRIMÉES
@@ -221,6 +229,7 @@ if(!isset($_SESSION['login'])){
            echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$mysqli->escape_string($row[1])."</span>";
            $valeur=$mysqli->escape_string($row[1]);
            echo "<br>";
+           echo "<br>";
            $image = preg_replace('/\s+/', '_', $valeur);	//remplace " " par _ 
            if (file_exists("Photos/".$image.".jpg")) {
                 echo "<img src=\"Photos/".$image.".jpg\" width=\"150\" height=\"150\">";
@@ -228,7 +237,11 @@ if(!isset($_SESSION['login'])){
                 echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
             }
             echo "<br>";
+            echo "<br>";
             echo "<button class=\"buttonDelete\" onclick=\"supprimerPanier('".$mysqli->escape_string($row[2])."','".$mysqli->escape_string($row[1])."')\">Supprimer du Panier</button>";
+            echo "<br>";
+            echo "<br>";
+            echo "<button class=\"buttonComposition\" onclick=\"composition('".$mysqli->escape_string($row[2])."','".$mysqli->escape_string($row[1])."')\">Composition</button>";
   
            echo "<br>";
            echo "<p>---------------------------------------------------------------------</p>";

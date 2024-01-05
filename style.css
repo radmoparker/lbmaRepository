@@ -1,14 +1,35 @@
 
+body{
+    background: linear-gradient(to right, #c0bdbd, #f8f8f8);
+}
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: #633446;
+    background-image: url('Photos/bande7.jpg');
+  background-size:contain; /* Ajuste la taille de l'image pour couvrir tout le fond */
+  background-position: center; /* Centre l'image sur le fond */
+  background-repeat: repeat;
+  color: #582828;
+    font-weight:bold;
+    font-size:20px;
+    opacity:1;
     padding: 2%;
     width: 100%;
     text-align: center;
-    text-decoration: none; 
+    text-decoration:none;
+    border-radius:18px;
+    /*The fourth number of box-shadow able to spread the shadow all around the button*/
+    box-shadow: 2px 2px 3px 2px rgb(58, 49, 52);
+    text-shadow: -12px 12px 4px 10px rgba(184, 38, 38, 1);
+
+}
+img{
+    border-radius: 15px;
+    /*The fourth number of box-shadow able to spread the shadow all around the button*/
+    box-shadow: 2px 2px 3px 2px rgb(58, 49, 52);
 }
 a{
     cursor:pointer;
+    font-weight: bold;
     color:blue;
     text-decoration: none; 
 }
@@ -19,15 +40,21 @@ a:hover{
 }
 a:active{
     color:red;
+    font-weight: bold;
     text-decoration: none; 
 }
 a:visited { 
     color:blue;
+    font-weight: bold;
     text-decoration: none; 
   } 
 
 nav {
     background-color: #a7a4a4;
+    background-image: url('Photos/bande7.jpg');
+  background-size: cover; /* Ajuste la taille de l'image pour couvrir tout le fond */
+  background-position: center; /* Centre l'image sur le fond */
+  background-repeat: no-repeat;
     margin-left:8px;
     width: 20%;
     height: 300px;
@@ -35,13 +62,15 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    margin-top: 18%;
+    margin-top: 20%;
     border-radius:45px;
     opacity:0.85;
     transition:  opacity 0.3s;
     transition:  width 0.8s;
     transition:  width height 0.5s;
     transition:  font-size 0.1s;
+    /*The fourth number of box-shadow able to spread the shadow all around the button*/
+    box-shadow: 2px 2px 3px 2px rgb(58, 49, 52);
 
 }
 nav:hover{
@@ -175,6 +204,29 @@ background-color:rgb(227, 65, 64);
     box-shadow:none;
 }
 
+.buttonComposition{
+
+    background-color:rgb(168, 108, 16);
+    color:white;
+    padding-left:13px;
+    padding-right:13px;
+    padding-top:6px;
+    padding-bottom:6px;
+    cursor:pointer;
+    opacity:0.85px;
+    box-shadow: 2px 2px 3px rgba(44, 42, 42, 0.75);
+    margin-right:2px;
+    vertical-align:top;
+    
+}
+.buttonComposition:active{
+    margin-left:2px;
+    margin-top:2px;
+    margin-right:0px;
+    
+    box-shadow:none;
+}
+
 .buttonFiltre{
     background-color:rgb(226, 206, 24);
     color:rgb(0, 0, 0);
@@ -241,6 +293,11 @@ background-color:rgb(227, 65, 64);
     color:white;
     opacity:1;
 
+}
+
+.search{
+font-weight:bold;
+    font-size:18px;
 }
 
 

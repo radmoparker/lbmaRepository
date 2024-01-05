@@ -109,6 +109,9 @@
 
 			//document.location.href='page1.htm'
 		}
+		function composition(id,nom){
+			document.location.href ="composition.php?id="+id+"&nom="+nom;
+		}
 	</script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -123,7 +126,7 @@
     </header>
     <main>
     <div>
-		<div>
+		<div class="search">
 			Recherche: 
 			<input id="txtRecherche" type="text" name="example" list="exampleList">
 			<datalist id="exampleList">
@@ -154,6 +157,8 @@
         </div>
 		</div>
 	</div>
+	<br>
+	<p style="color:blue;font-weight:bold;font-size:18px">La  <span style="color:red;font-weight:bold;font-size:18px">Satisfaction</span> vous indiquera le nombre d'ingrédients <span style="color:red;font-weight:bold;font-size:18px">AVEC</span> que comporte la recette (Ordre décroissant)</p>
     <br>
     <br>
     <br>
@@ -161,7 +166,7 @@
     </div>
     </main>
     <nav>
-	<h3>Panier</h3>
+	<h3>Recherche</h3>
 	<p>L'abus d'alcool est dangeureux pour la santé,</p><p>Buvez avec modération,</p><p>LBMA </p>
 	</nav>
 </body>

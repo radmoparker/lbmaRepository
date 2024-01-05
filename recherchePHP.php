@@ -1,5 +1,5 @@
 <?php
-	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
 	$username = 'doadmin';
 	$password = 'AVNS_0_3_USnXxaDGye-lb-w';
@@ -7,11 +7,16 @@
 	$sslmode = 'REQUIRED';
 
 	// Connexion à la base de données
-	$mysqli = mysqli_connect($host, $username, $password, $database, $port)or die("Erreur de connexion");
+	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
+	
     //$mysqli = mysqli_connect('127.0.0.1', 'root', '');
     $ok = $mysqli->select_db("LBMA");
 	$avec = $_GET['avec'];
+	
 	$sans = $_GET['sans'];
+	if(($avec == "") && ($sans != "")){
+	$avec = 'Aliment';
+	}
 
 	function getAllRecipies2($hier,$mysqli,&$listRecette){
 	
@@ -55,6 +60,10 @@
 		}		
 	}
 
+	function my_sort($a, $b) {
+		if ($a[3] == $b[3]) return 0;
+		return ($a[3] < $b[3]) ? 1 : -1;
+	}
 
     function f($avec,$sans,$mysqli){
         $avecExploded = explode(",",$avec);
@@ -74,6 +83,7 @@
 			getAllRecipies2($ingredientSans, $mysqli, $aux2);
 			$arrayDeToutdeSans = $aux2;
 		}
+		/* !!!! SEULEMENT SI ON VEUT LA RECHERCHE SANS APPROXIMATION (VERSION PRECEDENTE)
 		$arrayResult = $arrayDeTout[0];
 
 		if (count($avecExploded) > 1) {
@@ -83,11 +93,30 @@
 			}		
 			
 		}
+		
+		*/
+
+		for ($i=0; $i < count($arrayDeTout) ; $i++) {
+			//print_r($i);
+			foreach ($arrayDeTout[$i] as $idRecette => $recette) {
+				//print_r($idRecette);
+				if (!isset($arrayResult[$idRecette])) {
+					$arrayResult[$idRecette] = $recette;
+					$arrayResult[$idRecette][] = 0;
+				}
+				$arrayResult[$idRecette][3]=$arrayResult[$idRecette][3]+1;
+			}
+		}	
+
 		if (count($sansExploded)>0){
 			$arrayResult = array_diff_key($arrayResult,$arrayDeToutdeSans);
 		}
-		
+
+		  
+		usort($arrayResult, "my_sort");
+		//print_r($arrayResult);
         return $arrayResult;
+
     }
 	$arrayResult=f($avec,$sans,$mysqli);
 

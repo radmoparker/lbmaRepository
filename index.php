@@ -31,8 +31,9 @@
 		//Charge Connexion.php : l'intrface d'inscription client
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
-
-
+		}
+		function composition(id,nom){
+			document.location.href ="composition.php?id="+id+"&nom="+nom;
 		}
 		function goNext(id){
 
@@ -207,7 +208,7 @@ if(isset($_GET['hierarchie'])){
   
   $bb = array();
 	getAllRecipies($hierarchie,$mysqli,$bb);
-	
+	//Parcour des recettes
 	foreach ($bb as $rec){
 		/*$u=0;
 		foreach ($rec as $elem){
@@ -229,6 +230,10 @@ if(isset($_GET['hierarchie'])){
 		echo "<br>";
 		echo "<br>";
 		echo "<button class=\"buttonPanier\" onclick=\"ajouterPanier('".$rec[0]."','".$rec[1]."')\">Ajouter au panier</button>";
+		echo "<br>";
+		echo "<br>";
+		echo "<button class=\"buttonComposition\" onclick=\"composition('".$rec[0]."','".$rec[1]."')\">Composition</button>";
+
 		//<button onclick="connexion()">Connexion</button>
 
 		echo "<br>";
@@ -286,7 +291,7 @@ $mysqli->close();
 		 }
 	}else{ //ON A CLIQUÉ SUR AU MOINS UN INGREDIENT
 		
-		echo "<p>On a cliqué sur un ingrédient</p>";
+		/*echo "<p>On a cliqué sur un ingrédient</p>";*/
 		//Récupération du dernier élément cliqué
 		$hierarchie = $_GET['hierarchie'];
 
@@ -306,7 +311,7 @@ $mysqli->close();
 		//Test si le résultat est null (pas de descendant) on affiche lrien
 		//soit les feuilles de l'arbre
 		if($result->num_rows ==0) {
-			echo "<p style=\"color:red;font-weight:bold;\">IL N'Y A PLUS D'INGREDIENT</p>";
+			echo "<p style=\"color:red;font-weight:bold;\">IL N'Y A PLUS DE SOUS-CATÉGORIE D'INGRÉDIENTS</p>";
 			
 		}else{
 			//AFFICHAGE DES INGREDIENTS SOUS CATEG DE L'ELEMENT CLIQUÉ PRÉCÉDEMENT
