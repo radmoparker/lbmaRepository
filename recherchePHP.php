@@ -1,14 +1,17 @@
 <?php
-$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
-	$port = 25060;
-	$username = 'doadmin';
-	$password = 'AVNS_0_3_USnXxaDGye-lb-w';
-	$database = 'defaultdb';
-	$sslmode = 'REQUIRED';
+//CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
+        
+        
+        $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
+        $port = 25060;
+        $username = 'doadmin';
+        $password = 'AVNS_0_3_USnXxaDGye-lb-w';
+        $database = 'defaultdb';
+        $sslmode = 'REQUIRED';
 
-	// Connexion à la base de données
-	$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-	
+        // Connexion à la base de données
+        $mysqli = mysqli_connect($host, $username, $password, $database, $port);
+        
     //$mysqli = mysqli_connect('127.0.0.1', 'root', '');
     $ok = $mysqli->select_db("LBMA");
 	$avec = $_GET['avec'];
@@ -18,6 +21,7 @@ $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$avec = 'Aliment';
 	}
 
+	/*Récupère toutes les recettes contenant l'ingredient $hier inci que les ingrédient descendant de $hier*/
 	function getAllRecipies2($hier,$mysqli,&$listRecette){
 	
 		$hierarchie=$hier;
@@ -60,6 +64,7 @@ $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 		}		
 	}
 
+	/**/
 	function my_sort($a, $b) {
 		if ($a[3] == $b[3]) return 0;
 		return ($a[3] < $b[3]) ? 1 : -1;
@@ -95,7 +100,7 @@ $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 		}
 		
 		*/
-
+		//incrementation du score de satisfaction des recettes à chaque fois qu'un de ses ingredients était dans la liste des ingredients "AVEC"
 		for ($i=0; $i < count($arrayDeTout) ; $i++) {
 			//print_r($i);
 			foreach ($arrayDeTout[$i] as $idRecette => $recette) {
@@ -118,6 +123,7 @@ $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
         return $arrayResult;
 
     }
+    /*Enregistrement json pour pouvoir récupérer dans rechercheJS.js*/
 	$arrayResult=f($avec,$sans,$mysqli);
 
 	header('Content-type: application/json');

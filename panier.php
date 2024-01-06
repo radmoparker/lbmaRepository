@@ -11,11 +11,13 @@
 			
 
 		}
+		//Accès au panier
 		function panier(){
 			document.location.href ="panier.php?";
 			
 
 		}
+		//Accès à l'interface de connexion
 		function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
@@ -27,11 +29,13 @@
 			
 
 		}
+		//Accès à l'interface d'inscription
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
 
 		}
+		//Clique sur la composition d'une recette
         function composition(id,nom){
 			document.location.href ="composition.php?id="+id+"&nom="+nom;
 		}
@@ -82,24 +86,6 @@
     <main>
 
 <?php
-//AFFICHAGE DES COOKIES
-/* DEBOGGAGE COOKIES
-if (isset($_COOKIE['delete']) && is_array($_COOKIE['delete'])) {
-    foreach ($_COOKIE['delete'] as $indice => $valeur) {
-        echo "<p>delete : " .$indice." => ". $valeur . "</p>";
-
-    }
-}
-
-if(isset($_COOKIE['tab']) && (is_array($_COOKIE['tab']))){ 
-    foreach($_COOKIE['tab'] as $indice => $valeur){ 
-        echo "<p>tab : " .$indice." => ". $valeur . "</p>";
-    }
-}
-*/
-
-
-
 
 
 
@@ -108,20 +94,18 @@ session_start();
 echo "<p style=\"color:green; font-weight:bold; font-size:30px;\">Voici vos favoris : </p>";
 //L'UTILISATEUR EST DECONNECTÉ
 if(!isset($_SESSION['login'])){
-    //SUPPRESSIONS DES COOKIES TABLEAU D'ELEMENT À SUPPRIMÉES
+    //SUPPRESSIONS DES COOKIES  DANS LE TABLEAU D'ELEMENT À SUPPRIMÉES : DELETE
     if (isset($_COOKIE['delete']) && is_array($_COOKIE['delete'])) {
         foreach ($_COOKIE['delete'] as $indice => $valeur) {
-           // echo "<p>" . $valeur . "</p>";
     
-            // Suppression du cookie a
+            // Suppression du cookie 
             $expiration = time() - 3600; // DATE ANTERIEUR POUR SUPPRIMER
             setcookie("delete[" . $indice . "]", '', $expiration);
         }
     }
-    
+    //Affichage des recettes présentes dans les cookies (Panier hors connexion) Bouton d'accès à la composition compris (on affiche que le titre et l'image)
     if(isset($_COOKIE['tab']) && (is_array($_COOKIE['tab']))){ 
         foreach($_COOKIE['tab'] as $indice => $valeur){ 
-            //echo "$indice = $valeur\n";
             
     
             echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$valeur."</span>";
@@ -146,6 +130,7 @@ if(!isset($_SESSION['login'])){
         }
     }
 }else{  //LE CLIENT EST CONNECTÉ 
+//CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
     
         
             $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -165,15 +150,9 @@ if(!isset($_SESSION['login'])){
     if(isset($_COOKIE['delete']) && (is_array($_COOKIE['delete']))){
         foreach($_COOKIE['delete'] as $indice => $valeur){ 
             
-            //Suppression des recettes dans la tables du client ( PANIER) si déja présente
+            //Suppression des recettes dans la tables du client ( PANIER) si  présente (FORCEMENT LE CAS)
             $result = $mysqli->query("SELECT id_client,id_recette FROM PANIER WHERE id_client = '".$mysqli->escape_string($login)."' AND id_recette = '".$mysqli->escape_string($indice)."'  ");
-           /* while($row = $result-> fetch_row()){
-                echo "colonne 1 : ".$row[0].", colonne 2 : ".$row[1];
-       
-                echo "<br>";
-                echo "<br>"; 
-                //$ingredient = $mysqli->escape_string($row[1]);
-            }*/
+           
             if ($result->num_rows !=0) {
                 $mysqli->query("DELETE FROM PANIER WHERE id_client = '".$mysqli->escape_string($login)."' AND id_recette = '".$mysqli->escape_string($indice)."'");
             }
@@ -182,12 +161,11 @@ if(!isset($_SESSION['login'])){
         }
     }
     //Suppression des cookies dans le tableau correspondant
-    //SUPPRESSIONS DES COOKIES TABLEAU D'ELEMENT À SUPPRIMÉES
+    //SUPPRESSIONS DES COOKIES DU TABLEAU D'ELEMENT À SUPPRIMÉES : DELETE
     if (isset($_COOKIE['delete']) && is_array($_COOKIE['delete'])) {
         foreach ($_COOKIE['delete'] as $indice => $valeur) {
-            //echo "<p>" . $valeur . "</p>";
     
-            // Suppression du cookie a
+            // Suppression du cookie 
             $expiration = time() - 3600; // DATE ANTERIEUR POUR SUPPRIMER
             setcookie("delete['" . $indice . "']", '', $expiration);
         }
@@ -198,7 +176,7 @@ if(!isset($_SESSION['login'])){
 
             
     if(isset($_COOKIE['tab']) && (is_array($_COOKIE['tab']))){ 
-        //INSERTION DES RECETTES DU CLIENTS SI ELLES N'ÉTAIENT PAS DÉJA DANS LA BASE
+        //INSERTION DES RECETTES (HORS CONNECTION) AU PANIER DU CLIENT SI ELLES N'ÉTAIENT PAS DÉJA DANS LA BASE
        
         foreach($_COOKIE['tab'] as $indice => $valeur){ 
             
@@ -209,21 +187,12 @@ if(!isset($_SESSION['login'])){
             }
 
            
-
-            
-  
-            
-            
-            //il n'y a qu'une ligne (1 ingrédient)
-           /* while($row = $result-> fetch_row()){
-                $ingredient = $mysqli->escape_string($row[0]);
-            }*/
             
         }
      
         
     }
-       //Affichage du panier client
+       //Affichage du panier client (titre image boutton suppression , bouton accès composition
        $result = $mysqli->query("SELECT p.id_client,r.titre_recette,r.id_recette FROM PANIER p, RECETTE r WHERE p.id_recette = r.id_recette  AND p.id_client = '".$mysqli->escape_string($login)."' ");
        while($row = $result-> fetch_row()){
            echo "<span style=\"color:blue; font-weight:bold; font-size:20px;\"> ".$mysqli->escape_string($row[1])."</span>";
@@ -247,7 +216,7 @@ if(!isset($_SESSION['login'])){
            echo "<p>---------------------------------------------------------------------</p>";
            echo "<br>"; 
            echo "<br>"; 
-           //$ingredient = $mysqli->escape_string($row[1]);
+
        }
      
     $mysqli->close();

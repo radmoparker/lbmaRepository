@@ -1,4 +1,5 @@
 
+/*Ajoute un ingrédient à la liste des ingredients "AVEC"*/
 function ajouterAvec(){
     var spanA = document.getElementById("spanAvec");
     var txtBarreRecherche = document.getElementById("txtRecherche");
@@ -12,7 +13,7 @@ function ajouterAvec(){
         txtBarreRecherche.value = "";
     }
 }
-
+/*Ajoute un ingrédient à la liste des ingredients "SANS"*/
 function ajouterSans(){
     var spanB = document.getElementById("spanSans");
     var txtBarreRecherche = document.getElementById("txtRecherche");
@@ -27,13 +28,15 @@ function ajouterSans(){
     }
 
 }
+/*REMISE À 0 DES LISTES AVEC/SANS D'INGREDIENTS*/
 function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
     var spanB = document.getElementById("spanSans");
         spanA.innerHTML="";
         spanB.innerHTML="";
 }
-/*  !! ATTENTION : CETTE FONCTION EST ESSENTIELLE
+/* 	AJOUT DE L'IMAGE D'UNE RECETTE ET DE SON BOUTON
+ !! ATTENTION : CETTE FONCTION EST ESSENTIELLE
     lorsqu'on charge les image directement dans la boucle for (en meme temps que le parcours des recettes)
     , comme les images son chargée de manière asynchrone les images ne sont pas chargée dans leur div correspondante
     En utilisant une fonction séparément on est sur que la fonction est executée avec les paramètre adéquat
@@ -78,7 +81,8 @@ function createButton(newDiv, id, name) {
 }
 
 
-
+/*Récupère le tableau ARRAYRESULT DU FICHIER recherchePHP contenant les recettes contenant et ne contenant pas les ingredients AVEC/SANS
+AINSI QUE LEUR DEGRÉ DE SATISFACTION (correspondant au nombre d'ingrédient AVEC que la recette satisfait (contient)*/
 function bRecherche(){
     jQuery.ajax({
         type: "GET",
@@ -92,6 +96,7 @@ function bRecherche(){
             /*data.result = resultat du script recherchePHP.php ie l'intersection des
             recettes avec/sans
             */
+           //Sert à ne pas executé la première fois le premier if dans la boucle for pourquoi 10000 et pas 0 ? J'ai oublié mais sûrement un au cas ou
            var cpt = 1000;
             for (var toto in data.result) {
                 if(cpt>1000){
@@ -114,21 +119,21 @@ function bRecherche(){
                     }else{
                         var texxt="";
 
-                        if (j==3) {     //if compteur Pour la 
+                        if (j==3) {     //Degré de satisfaction d'une recette
                             texxt= 'SATISFACTION : ';
                             p_elem = $('<p>').text(texxt+elem).css({
 		                    'font-weight': 'bold',
 		                    'font-size': '18px' ,
 		                    'color':'blue'
 		                });
-		        }else{
+		        }else{	//PREPARATION ou autre données basique
 		        p_elem = $('<p>').text(texxt+elem);
 		        }
                         
                         
                     }
                     newDiv.append(p_elem);
-                        //newDiv.append("<br>");
+
                     u++;
                 }
                 
@@ -138,7 +143,7 @@ function bRecherche(){
                 var image = picture.replace(/\s+/g, '_');
                 var imagePath = "Photos/" + image + ".jpg";
             
-                // Ajouter la nouvelle div à #divMain
+                // Ajouter la nouvelle div à #divMain (contenant principal)
                 $('#divMain').append(newDiv);
                 //Ajout de la ligne de séparation des recettes
                 var separateDiv = $('<div>').attr('id', cpt)
@@ -161,37 +166,3 @@ function bRecherche(){
 
 
 
-//AFFICHAGE DE TOUTES LES RECETTES DE BASE (SANS AVOIR CLIQUÉ SUR IUN INGRÉDIENT)
-/*
-    foreach ($bb as $rec){
-        
-        if (file_exists("Photos/".$rec[1].".jpg")) {
-            echo "<img src=\"Photos/".$rec[1].".jpg\" width=\"150\" height=\"150\">";
-        } else {
-            echo "<img src=\"Photos/default.jpg\" width=\"150\" height=\"150\">";
-        }
-        echo "<br>";
-        echo "<br>";
-        echo "<button class=\"buttonPanier\" onclick=\"ajouterPanier('".$rec[0]."','".$rec[1]."')\">Ajouter au panier</button>";
-        //<button onclick="connexion()">Connexion</button>
-
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<p>----------------------------------------------------------</p>";
-    }
-}
-*/
-/* Chargement d'une image en javascript 
-    const image = new Image();
-    image.src = "image.jpg";
-    image.onload = function() {
-    document.body.appendChild(image);
-    };
-*/
-
-/*  Closure fonctionne mais trop compliqué et non maîtrisée pour utilisation
-
-
-*/

@@ -32,6 +32,7 @@
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 		}
+		//Charge la composition d'une recette (clique sur le bouton composition de celle-ci
 		function composition(id,nom){
 			document.location.href ="composition.php?id="+id+"&nom="+nom;
 		}
@@ -40,6 +41,7 @@
 
 			//document.location.href='page1.htm'
 		}
+		//Ajoute une recette au panier
 		function ajouterPanier(id,recette){
 			var expireDate = new Date();
 			delaiExpiration = 1;
@@ -72,9 +74,9 @@
 		
     <p style="color:blue; font-weight:bold; font-size:24px;">DETAIL DU COKTAIL</p>
 <?php
-
+	//Condition toujours vrai à part si on accède à composition en tapant le chemin depuis l'url (id et nom de la recette à décrire)
     if(isset($_GET['id']) && isset($_GET['nom'])){
-
+	//CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
         
         
         $host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -93,13 +95,13 @@
             die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
         }
         $ok = $mysqli->select_db("LBMA");
-        //On récupère d'abord larecettes
+        //RÉCUPÉRATION DE LA RECETTE
 
         $result = $mysqli->query("SELECT r.titre_recette,r.preparation,r.id_recette
             FROM RECETTE r
             WHERE r.id_recette ='".$mysqli->escape_string($_GET['id'])."'");
+            //AFFICHAGE DE LA RECETTE (TITRE, DESCRIPTION , IMAGE ... ETC)
             while($row = $result-> fetch_row()){
-                //$cpt=0;
                 echo "<p style=\"font-weight:bold;font-size:20px;\">".$row[0]."</p>";
                 $image = preg_replace('/\s+/', '_', $row[0]);	//remplace " " par _ 
                 if (file_exists("Photos/".$image.".jpg")) {
@@ -113,41 +115,25 @@
                 echo "<p style=\"font-weight:bold;font-size:20px;\">Preparation</p>";
                 echo "<p style=\"font-weight:bold;color:rgb(77, 80, 77);\">".$row[1]."</p>";
                 echo "<p style=\"font-weight:bold;font-size:20px;\">Composition</p>";
-               /* foreach($row as $attribut){ 
-                    echo "<p> ".$cpt." ".$attribut."</p>";
-                    $cpt++;
-                }
-                */
-                //echo $row[0]."   ";
+               
         
             }
             $result = $mysqli->query("SELECT c.qtt_ingredient,c.nom_ingredient
             FROM RECETTE r,COMPOSITION c
             WHERE c.id_recette = r.id_recette 
             AND r.id_recette ='".$mysqli->escape_string($_GET['id'])."'");
-
+	//AFFICHAGE DE LA PREPARATION
             while($row = $result-> fetch_row()){
                 echo "<span style=\"font-weight:bold;color:brown;\">".$row[1]." => </span>";
                 echo "<span style=\"font-weight:bold;color:rgb(77, 80, 77);\"> ".$row[0]."</span>";
                 echo "<br>";
-                /*$cpt=0;
-                foreach($row as $attribut){ 
-                    echo "<p> ".$cpt." ".$attribut."</p>";
-                    $cpt++;
-                }*/
+               
             }
 
             $mysqli->close();
     }
 
 
-
-        /*
-         $result = $mysqli->query("SELECT r.id_recette,r.titre_recette,r.preparation
-            FROM RECETTE r, COMPOSITION c
-            WHERE r.id_recette = c.id_recette
-            AND c.id_ingredient ='".$mysqli->escape_string($hierarchie)."'");
-        */
 	?>
      </main>
 	<!--NAVIGATION À GAUCHE DU SITE-->

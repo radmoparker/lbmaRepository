@@ -5,23 +5,25 @@
 	<script language="Javascript">
 	
 
-		//changement de la couleur du fond du dernier paragraphe
-		//Au clique du bouton "Cliquez"
+		//Revenir à l'accueil
 		function accueil(){
 			document.location.href ="index.php?";
 			
 
 		}
+		//Page d'inscription
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
 
 		}
+	//Page de connection
         function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
 
 		}
+		//Accès au panier
 		function panier(){
 			document.location.href ="panier.php?";
 			
@@ -53,6 +55,7 @@
     </header>
     <main>
     <?php
+    	//CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
 	    
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -81,7 +84,7 @@ session_start();
 //Si on n'est pas connecté
 if(!isset($_SESSION['login'])){
 
-    //Affichage du formulaire de base si en mode inscription et que l'on est pas connecté
+    //Si mode inscription et que l'on est pas connecté (interface d'inscription)
     if(isset($_GET['type']) && ($_GET['type'] == "inscription")){
     
         echo "<h3>INSCRIPTION</h3>";
@@ -122,7 +125,7 @@ if(!isset($_SESSION['login'])){
         echo "</form>";
     }
 
-    //Affichage du formulaire d'inscription mais que l'on est déja connecté
+    //Si Mode Connexion et que l'on est déconnecté (interface de connexion)
     if(isset($_GET['type']) && ($_GET['type'] == "connexion")){
     echo "<h3>CONNEXION</h3>";
     echo "<form method=\"post\" action=\"Connexion.php?type=resultatConnexion\" id=\"11\">";
@@ -136,8 +139,9 @@ if(!isset($_SESSION['login'])){
 
     }
 
-    //action de validation du formulaire d'inscripon
+    //Si on a validé un formulaire d'inscription
     if(isset($_GET['type']) && ($_GET['type'] == "resultatFormulaire")){
+    //CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
     	 
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -158,13 +162,12 @@ if ($mysqli->connect_error) {
     $ok = $mysqli->select_db("LBMA");
     $login = $_POST['login'];
     
-    // Requête préparée
+    // VERIFIACATION SI L'UTILISATEUR EXISTE DEJA DANS LA BD
 	    $stmt = $mysqli->prepare("SELECT * FROM CLIENT WHERE id_client = ?");
 	    $stmt->bind_param("s", $login);
 	    $stmt->execute();
 	$result = $stmt->get_result();
     
-    //$result = $mysqli->query("SELECT * FROM CLIENT WHERE id_client ='".$mysqli->escape_string($login)."'");
 
         //SI LE CLIENT N'EXISTE PAS, ON LE CRÉE
         if($result->num_rows ==0) {
@@ -179,7 +182,7 @@ if ($mysqli->connect_error) {
             $naissance = $_POST['date_naissance'];
             $telephone = $_POST['telephone'];
 
-            //INSERTION DES 2 VALEURS ALÉATOIRE ET DU RESTE SI IL ONT ÉTÉ ENTRÉS
+            //INSERTION DU COUPLE LOGIN MDP ET DU RESTE SI IL ONT ÉTÉ ENTRÉS
             $mysqli->query("INSERT INTO CLIENT VALUES ('".$mysqli->escape_string($login)."','".$mysqli->escape_string($mdp)."',NULL,NULL,NULL,NULL,NULL,NULL)");
             if($nom != ""){
                 $mysqli->query("UPDATE  CLIENT SET nom = ".$mysqli->escape_string($nom)."");
@@ -202,25 +205,21 @@ if ($mysqli->connect_error) {
              //Démarrer une session
             session_start();
 
-            // Enregistrer des données dans la session
+            // Enregistrer des données dans la session (LOGIN)
             $_SESSION['login'] = $login;
             echo "<h3> Bienvenue dans notre site ".$login."</h3>";
 
-        }else{
+        }else{	//ON A TROUVÉ LE LOGIN DANS LA BASE, ON NE PEUT S'INSCRIRE AVEC CE LOGIN
             echo "<h3>".$login." Existe déja !!!</h3>";
         }
-
-
-
-
-    //$mysqli->query("UPDATE INTO CLIENT VALUES ('".$mysqli->escape_string($login)."','".$mysqli->escape_string($mdp)."',NULL,NULL,NULL,NULL,NULL,NULL)");
 
     $mysqli->close();
     }
 
 
-    //action de validation du formulaire de connexion
+    //Le formulaire de connexion a ete validé
     if(isset($_GET['type']) && ($_GET['type'] == "resultatConnexion")){
+    //CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
     	
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -240,6 +239,7 @@ if ($mysqli->connect_error) {
 	}
     $ok = $mysqli->select_db("LBMA");
 
+//RÉCUPÉRATION DES INFOS DE CONNEXION POUR VOIR SI CELA CORRESPOND À UN CLIENT DANS LA BD (REQUETE PRÉPARÉE)
     $login = $_POST['login'];
     $mdp = $_POST['mdp'];
     
@@ -249,13 +249,12 @@ if ($mysqli->connect_error) {
 	    $stmt->execute();
 	$result = $stmt->get_result();
 
-   // $result = $mysqli->query("SELECT * FROM CLIENT WHERE id_client ='".$mysqli->escape_string($login)."' AND mdp ='".$mysqli->escape_string($mdp)."'");
 
-        //SI LE CLIENT N'EXISTE PAS, ON LE CRÉE
+        //SI LE CLIENT N'EXISTE PAS, ON INDIQUE À L'UTILISATEUR L'ERREUR
         if($result->num_rows ==0) {
             echo "<h3>Aucun utilisateur ".$login." avec ce mot de passe n'est connu!!!</h3>";
 
-        }else{
+        }else{	//LA CONNEXION FONCTIONNE
             echo "<h3> Bienvenue dans notre site ".$login."</h3>";
             //Démarrer une session
             session_start();
@@ -268,7 +267,7 @@ if ($mysqli->connect_error) {
 
 
 
-    //$mysqli->query("UPDATE INTO CLIENT VALUES ('".$mysqli->escape_string($login)."','".$mysqli->escape_string($mdp)."',NULL,NULL,NULL,NULL,NULL,NULL)");
+
 
     $mysqli->close();
     }
@@ -276,8 +275,10 @@ if ($mysqli->connect_error) {
    
 
 }else{
-     //Si deconnexion
+     //Si on à cliqué sur deconnexion
      if(isset($_GET['type']) && ($_GET['type'] == "deconnexion")){
+     //CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
+    	
 	    
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
 	$port = 25060;
@@ -295,12 +296,12 @@ if ($mysqli->connect_error) {
 	    die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
 	}
         $ok = $mysqli->select_db("LBMA");
-    
+    	//DESTRUCTION DE LA SESSION
         session_destroy();
         echo "<h3> Vous êtes déconnecté</h3>";
 
         $mysqli->close();
-    }else{
+    }else{	//ON EST CONNECTÉ ET ON A PAS CLIQUÉ SUR DECONNEXION (AFFICHAGE DU BOUTON DE DECONNEXION)
         $login = $_SESSION['login'];
     echo "<h3> Bienvenue dans notre site ".$login."</h3>";
 

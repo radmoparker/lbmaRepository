@@ -1,5 +1,7 @@
-<?php
-    //Récupération de l'ensemble des ingrédients à partir de la bases de données 
+<?php	/*LE FICHIER PRÉSENT NE CONTIENT QUE L'INTERFACE DE RECHERCHE. TOUTES LES DONNÉES SONT GÉNÉRÉES DYNAMIQUEMENT EN AJAX ET JQUERY À PARTIR DES FICHIERS : rechercheJS.js et recherchePHP.php*/
+
+    //Récupération de l'ensemble des ingrédients à partir de la bases de données POUR POUVOIR L'UTILISER PAR LA SUITE
+    //CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
     
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -41,10 +43,10 @@
 				$uneRecette[]=$attribut;
 			}
 			$listRecette[$row[0]]=$uneRecette;
-			//echo $row[0]."   ";
+
 	
 		}
-		//get all subs 
+
 	
 		$result2 = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
 		FROM HIERARCHIE h, INGREDIENT i
@@ -63,8 +65,6 @@
 	
 			while($row2 = $result2-> fetch_row()){
 				getAllRecipies($row2[0],$mysqli,$listRecette);
-				//echo "<a href=\"lbmaWebsite.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
-				//echo "<br>";
 			}
 		
 		}
@@ -78,19 +78,22 @@
     <script type="text/javascript" src="jquery.js"></script>
 	<script type="text/javascript" src="rechercheJS.js"></script>
 	<script type="text/javascript">
-        //changement de la couleur du fond du dernier paragraphe
+        //Accès à l'accueil du site
 		function accueil(){
 			document.location.href ="index.php?";
 		
 		}
+		//Accès au panier
 		function panier(){
 			document.location.href ="panier.php?";
 			
 		}
+		//Accès à l'interface de connexion
 		function connexion(){
 			document.location.href ="Connexion.php?type=connexion";
 			
 		}
+		//Accès à l'interface d'inscription
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 
@@ -99,6 +102,7 @@
 		function rechercher(){
 			document.location.href ="rechercher.php?"
 		}
+		//Ajout au panier d'une recette
         function ajouterPanier(id,recette){
 			var expireDate = new Date();
 			delaiExpiration = 1;
@@ -109,6 +113,7 @@
 
 			//document.location.href='page1.htm'
 		}
+		//Accès à la composition d'une recette après clique du bouton composition de la recette
 		function composition(id,nom){
 			document.location.href ="composition.php?id="+id+"&nom="+nom;
 		}

@@ -32,6 +32,7 @@
 		function inscription(){
             document.location.href ="Connexion.php?type=inscription";
 		}
+		//Charge la composition d'une recette (clique sur le bouton composition de celle-ci
 		function composition(id,nom){
 			document.location.href ="composition.php?id="+id+"&nom="+nom;
 		}
@@ -40,6 +41,7 @@
 
 			//document.location.href='page1.htm'
 		}
+		//Ajout au panier d'une recette
 		function ajouterPanier(id,recette){
 			var expireDate = new Date();
 			delaiExpiration = 1;
@@ -78,33 +80,9 @@
 	<?php
 	//FONCTION REMPLI TABLEAU $listRecette de toutes les reccettes dont les 
 	//ingrédients ont por ascendant $hier,
-	
-
 	function getAllRecipies($hier,$mysqli,&$listRecette){
-		
-		/*
-    
-		$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
-		$port = 25060;
-		$username = 'doadmin';
-		$password = 'AVNS_0_3_USnXxaDGye-lb-w';
-		$database = 'defaultdb';
-		$sslmode = 'REQUIRED';
-
-		// Connexion à la base de données
-		$mysqli = mysqli_connect($host, $username, $password, $database, $port);
-		*/
-		/*$mysqli = mysqli_connect('127.0.0.1', 'root', '');
-		// Vérifier la connexion
-		if ($mysqli->connect_error) {
-			die("Erreur de connexion à la base de données : " . $mysqli->connect_error);
-		}
-		
-		$ok = $mysqli->select_db("LBMA");
-		*/
 	
 		$hierarchie=$hier;
-		//$listRecette = array();
 		//get all recipies avec la hierarchie actuelle si elles existent 
 		$result = $mysqli->query("SELECT r.id_recette,r.titre_recette,r.preparation
 		FROM RECETTE r, COMPOSITION c
@@ -117,10 +95,9 @@
 				$uneRecette[]=$attribut;
 			}
 			$listRecette[$row[0]]=$uneRecette;
-			//echo $row[0]."   ";
 	
 		}
-		//get all subs 
+
 	
 		$result2 = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
 		FROM HIERARCHIE h, INGREDIENT i
@@ -139,12 +116,10 @@
 	
 			while($row2 = $result2-> fetch_row()){
 				getAllRecipies($row2[0],$mysqli,$listRecette);
-				//echo "<a href=\"lbmaWebsite.php?hierarchie=".$mysqli->escape_string($row[0])."\">".$mysqli->escape_string($row[1])."</a>";
-				//echo "<br>";
 			}
 		
 		}
-		//$mysqli->close();
+
 		
 	}
 	
@@ -154,6 +129,7 @@
 <!--MAIN DU SITE : LA PARTIE CENTRALE-->
 
 <?php
+//CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
     
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -177,7 +153,7 @@ $ok = $mysqli->select_db("LBMA");
 
 
 
-//AFFICHAGE DE TOUTES LES RECETTES DE BASE (SANS AVOIR CLIQUÉ SUR IUN INGRÉDIENT)
+//ON A CLIQUÉ SUR UN INGREDIENT, ON AFFICHE DONC TOUTE LES RECETTES AYANT CETTE INGREDIENT OU COMME INGREDIENT SES DESCENDANT
 if(isset($_GET['hierarchie'])){
 	//Récupération de l'ingrédient correspondant
 	$result = $mysqli->query("SELECT DISTINCT i.nom_ingredient
@@ -190,7 +166,7 @@ if(isset($_GET['hierarchie'])){
 	  }
 	
 
-	//Récupération du chemin d'ingrédient sélectionné
+	//Récupération du chemin d'ingrédient sélectionné PARCOURS DE NAVIGATION HIERARCHIQUE
 	if(!isset($_GET['arbre_ingredient'])){
 		$chemin = $ingredient."/";
 	}else{
@@ -201,24 +177,14 @@ if(isset($_GET['hierarchie'])){
 	//RÉCUPÉRATION POUR AVOIR LES RECETTES CORRESPONDANT À LA HIERARCHIE
 	$hierarchie = $_GET['hierarchie'];
 	
-	
-	//echo" <p>ON DEVRAIT VOIR ".$hierarchie."</p>";
 
-  //Affichage de toutes les recettes
+  //Affichage de toutes les recettes en utilisant la fonction getAllRecipies
   
   $bb = array();
 	getAllRecipies($hierarchie,$mysqli,$bb);
 	//Parcour des recettes
 	foreach ($bb as $rec){
-		/*$u=0;
-		foreach ($rec as $elem){
-			echo "<p>".$u." ".$elem."</p>";
-			echo " ";
-			echo "<br>";
-			$u++;
-			
-		}
-		*/
+		
 		echo "<p style=\"font-weight:bold;font-size:20px;\">".$rec[1]."</p>";
 		echo "<p>".$rec[2]."</p>";
 		$image = preg_replace('/\s+/', '_', $rec[1]);	//remplace " " par _ 
@@ -256,6 +222,7 @@ $mysqli->close();
     <nav>
     <p style="color:black; font-weight:bold; font-size:20px;">NAVIGATION</p>
    <?php
+   //CONNEXION À LA BD (EN COMMENTAIRE LE CODE POUR LA VERSION SERVEUR)
          
     
 	$host = 'db-mysql-fra1-60708-do-user-15443973-0.c.db.ondigitalocean.com';
@@ -277,7 +244,7 @@ $mysqli->close();
 
 	//ON A CLIQUÉ SUR AUCUN INGRDIENT
 	if(!isset($_GET['hierarchie'])){
-		//RECHERCHE des ingrédient qui n'ont pas de categorie superieur il n'y a qu' "ALIMENT"
+		//RECHERCHE des ingrédient qui n'ont pas de categorie superieur il n'y a qu' "ALIMENT" MAIS ON LE FAIT DYNAMIQUEMENT AU CAS OU LES DONNÉES ÉVOLUENT
 		$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie,i.nom_ingredient
 		FROM HIERARCHIE h, INGREDIENT i
 		WHERE i.id_ingredient = h.id_hierarchie
@@ -291,11 +258,10 @@ $mysqli->close();
 		 }
 	}else{ //ON A CLIQUÉ SUR AU MOINS UN INGREDIENT
 		
-		/*echo "<p>On a cliqué sur un ingrédient</p>";*/
 		//Récupération du dernier élément cliqué
 		$hierarchie = $_GET['hierarchie'];
 
-		//Recherche des sous-catégorie de l'element cliqué
+		//Recherche desingredients sous-catégorie de l'element cliqué
 		$result = $mysqli->query("SELECT DISTINCT h.id_hierarchie, i.nom_ingredient
 		FROM HIERARCHIE h, INGREDIENT i
 		WHERE i.id_ingredient = h.id_hierarchie
@@ -308,13 +274,12 @@ $mysqli->close();
 
 	
 
-		//Test si le résultat est null (pas de descendant) on affiche lrien
-		//soit les feuilles de l'arbre
+		//Test si le résultat est null (pas de descendant) on affiche rien
 		if($result->num_rows ==0) {
 			echo "<p style=\"color:red;font-weight:bold;\">IL N'Y A PLUS DE SOUS-CATÉGORIE D'INGRÉDIENTS</p>";
 			
 		}else{
-			//AFFICHAGE DES INGREDIENTS SOUS CATEG DE L'ELEMENT CLIQUÉ PRÉCÉDEMENT
+			//AFFICHAGE DES INGREDIENTS SOUS CATEGORIE DE L'ELEMENT CLIQUÉ PRÉCÉDEMENT
 		while($row = $result-> fetch_row()){
 			echo "<a href=\"index.php?hierarchie=".$mysqli->escape_string($row[0])."&arbre_ingredient=".$mysqli->escape_string($chemin)."\">".$mysqli->escape_string($row[1])."</a>";				
 			echo "<br>";
@@ -323,29 +288,6 @@ $mysqli->close();
    
 		
 	}
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -359,7 +301,7 @@ $mysqli->close();
 
     </nav>
 
-	<?php	//ANCIENNE FONCTION
+	<?php	//ANCIENNE FONCTION : N'EST PAS UTILISÉ NE FONCTIONNAIT PAS ON A USÉ PLUTARD D'UN BUFFER POUR STOQUER LES RECETTES DEDANS
 
 
 //FONCTION RECURSIVE POUR OBTENIR TOUS LES ID INGREDIENTS SOUS JACENTS
