@@ -182,26 +182,70 @@ if ($mysqli->connect_error) {
             $naissance = $_POST['date_naissance'];
             $telephone = $_POST['telephone'];
 
-            //INSERTION DU COUPLE LOGIN MDP ET DU RESTE SI IL ONT ÉTÉ ENTRÉS
-            $mysqli->query("INSERT INTO CLIENT VALUES ('".$mysqli->escape_string($login)."','".$mysqli->escape_string($mdp)."',NULL,NULL,NULL,NULL,NULL,NULL)");
-            if($nom != ""){
-                $mysqli->query("UPDATE  CLIENT SET nom = ".$mysqli->escape_string($nom)."");
-            }
-            if($prenom != ""){
-                $mysqli->query("UPDATE  CLIENT SET prenom = ".$mysqli->escape_string($prenom)."");
-            }
-            if($adresse != ""){
-                $mysqli->query("UPDATE  CLIENT SET adresse = ".$mysqli->escape_string($adresse)."");
-            }
-            if($sexe != ""){
-                $mysqli->query("UPDATE  CLIENT SET sexe = ".$mysqli->escape_string($sexe)."");
-            }
-            if($mail != ""){
-                $mysqli->query("UPDATE  CLIENT SET mail = ".$mysqli->escape_string($mail)."");
-            }
-            if($naissance != ""){
-                $mysqli->query("UPDATE  CLIENT SET naissance = ".$mysqli->escape_string($naissance)."");
-            }
+            // INSERTION DU COUPLE LOGIN MDP ET DU RESTE SI ILS ONT ÉTÉ ENTRÉS
+	$insertQuery = "INSERT INTO CLIENT (id_client, mdp) VALUES (?, ?)";
+	$insertStmt = $mysqli->prepare($insertQuery);
+	$insertStmt->bind_param("ss", $login, $mdp);
+
+	if ($insertStmt->execute()) {
+	    $insertStmt->close();
+
+	    // Mise à jour du champ nom si la valeur est présente
+	    if ($nom != "") {
+		$updateNomQuery = "UPDATE CLIENT SET nom = ? WHERE id_client = ? AND mdp = ?";
+		$updateNomStmt = $mysqli->prepare($updateNomQuery);
+		$updateNomStmt->bind_param("sss", $nom, $login, $mdp);
+		$updateNomStmt->execute();
+		$updateNomStmt->close();
+	    }
+
+	    // Mise à jour du champ prenom si la valeur est présente
+	    if ($prenom != "") {
+		$updatePrenomQuery = "UPDATE CLIENT SET prenom = ? WHERE id_client = ? AND mdp = ?";
+		$updatePrenomStmt = $mysqli->prepare($updatePrenomQuery);
+		$updatePrenomStmt->bind_param("sss", $prenom, $login, $mdp);
+		$updatePrenomStmt->execute();
+		$updatePrenomStmt->close();
+	    }
+
+	    // Mise à jour du champ adresse si la valeur est présente
+	    if ($adresse != "") {
+		$updateAdresseQuery = "UPDATE CLIENT SET adresse = ? WHERE id_client = ? AND mdp = ?";
+		$updateAdresseStmt = $mysqli->prepare($updateAdresseQuery);
+		$updateAdresseStmt->bind_param("sss", $adresse, $login, $mdp);
+		$updateAdresseStmt->execute();
+		$updateAdresseStmt->close();
+	    }
+
+	    // Mise à jour du champ sexe si la valeur est présente
+	    if ($sexe != "") {
+		$updateSexeQuery = "UPDATE CLIENT SET sexe = ? WHERE id_client = ? AND mdp = ?";
+		$updateSexeStmt = $mysqli->prepare($updateSexeQuery);
+		$updateSexeStmt->bind_param("sss", $sexe, $login, $mdp);
+		$updateSexeStmt->execute();
+		$updateSexeStmt->close();
+	    }
+
+	    // Mise à jour du champ mail si la valeur est présente
+	    if ($mail != "") {
+		$updateMailQuery = "UPDATE CLIENT SET mail = ? WHERE id_client = ? AND mdp = ?";
+		$updateMailStmt = $mysqli->prepare($updateMailQuery);
+		$updateMailStmt->bind_param("sss", $mail, $login, $mdp);
+		$updateMailStmt->execute();
+		$updateMailStmt->close();
+	    }
+
+	    // Mise à jour du champ naissance si la valeur est présente
+	    if ($naissance != "") {
+		$updateNaissanceQuery = "UPDATE CLIENT SET naissance = ? WHERE id_client = ? AND mdp = ?";
+		$updateNaissanceStmt = $mysqli->prepare($updateNaissanceQuery);
+		$updateNaissanceStmt->bind_param("sss", $naissance, $login, $mdp);
+		$updateNaissanceStmt->execute();
+		$updateNaissanceStmt->close();
+	    }
+	} else {
+	    echo "Erreur lors de l'insertion : " . $insertStmt->error;
+	}
              //Démarrer une session
             session_start();
 
