@@ -31,8 +31,8 @@ function ajouterSans(){
 /*REMISE À 0 DES LISTES AVEC/SANS D'INGREDIENTS*/
 function reinitialiserIngredients(){
     var spanA = document.getElementById("spanAvec");
+	spanA.innerHTML="";
     var spanB = document.getElementById("spanSans");
-        spanA.innerHTML="";
         spanB.innerHTML="";
 }
 /* 	AJOUT DE L'IMAGE D'UNE RECETTE ET DE SON BOUTON
